@@ -10,7 +10,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'root',
-    //database: 'employee_db'
+    database: 'employee_db'
 })
 
 //connectDB
@@ -26,6 +26,7 @@ db.connect( (err) => {
 app.listen('3000', () => {
     console.log('server listening on port 3000');
 })
+
 
 //get user input 
 function employeeApp() {
@@ -57,7 +58,7 @@ function employeeApp() {
                     console.log("case 3");
                 break;
                 case "add employee":
-                    console.log("case 4");
+                    addEmployee();
                 break;
                 case "remove employee":
                     console.log("case 5");
@@ -72,6 +73,52 @@ function employeeApp() {
             }
         })
     }
+
+    function addEmployee() {
+        console.log("Adding new Employee")
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "employeeName",
+                message: "What is the employee's first name?"
+            },
+            {
+                type: "input",
+                name: "employeeLastName",
+                message: "What is the employee's last name?"
+            },
+            {
+                type: "input",
+                name: "employeeTitle",
+                message: "What is the employee's title?"
+            },
+            {
+                type: "input",
+                name: "employeeDepartment",
+                message: "What is the employee's department?"
+            },
+            {
+                type: "input",
+                name: "employeeSalary",
+                message: "What is the employee's salary?"
+            },
+            {
+                type: "input",
+                name: "employeeManager",
+                message: "Who is the employee's manager?"
+            }
+        ]).then(answers => {
+            let employees = {name: answers.employeeName, lastname: answers.employeeLastName, title: answers.employeeTitle, 
+                department: answers.employeeDepartment, salary: answers.employeeSalary, manager: answers.employeeManager}
+            let sql = 'INSERT INTO employees SET ?';
+            let query = db.query(sql, employees, (err, result) => {
+                if(err) throw err;
+                console.log(result);
+            })
+        }) 
+    }
+
+
     userSelect();
 }
 
