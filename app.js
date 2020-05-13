@@ -43,7 +43,8 @@ function employeeApp() {
                 "add employee",
                 "remove employee",
                 "Update Employee role" ,
-                "Update Employee manager"
+                "Update Employee manager",
+                "Update Employee salary"
             ]
             }
         ]).then(userChoice => {
@@ -68,6 +69,9 @@ function employeeApp() {
                 break;
                 case "Update Employee manager":
                     updateManager();
+                break;
+                case "Update Employee salary":
+                    updateSalary();
                 break;
                 
             }
@@ -242,6 +246,29 @@ function removeEmployee() {
 
      }
 
+
+          // Update employee manager
+          function updateSalary() {
+            inquirer.prompt([
+                {
+                    name: "getSalaryName",
+                    type: "input",
+                    message: "Which employee's salary would you like to update?",
+                },
+                {
+                    name: "getUpdSalary",
+                    type: "input",
+                    message: "what is the updated salary?",
+                }
+            ]).then(answers => {
+                //console.log(answers.getUpdRole + answers.getEmpName);
+                db.query(`UPDATE employees SET salary = '${answers.getUpdSalary}' WHERE name = '${answers.getSalaryName}'`, (err, res) => {
+                    if (err) throw err;
+                    showAll();
+                })
+            })
+    
+         }
     // let sql = "SELECT department FROM employees";
     // let query = db.query(sql, (err, res) => {
     //     var departments = [];
