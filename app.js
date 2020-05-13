@@ -61,7 +61,7 @@ function employeeApp() {
                     addEmployee();
                 break;
                 case "remove employee":
-                    console.log("case 5");
+                    removeEmployee();
                 break;
                 case "Update Employee role":
                     console.log("case 6");
@@ -176,7 +176,27 @@ function showmanager() {
 
 
 
-    //remove employee
+//remove employee
+function removeEmployee() {
+    showAll();
+    inquirer.prompt([
+        {
+            name: "removeEmployee",
+            type: "input",
+            message: "Which employee would you like to remove?",
+        }
+    ]).then(function(answer) {
+        db.query("DELETE FROM employees WHERE ?", {name: answer.removeEmployee}, (err, result) => {
+            if(err) throw err;
+            console.log(result);
+            showAll();
+        })
+        })
+    }
+
+
+
+
     // let sql = "SELECT department FROM employees";
     // let query = db.query(sql, (err, res) => {
     //     var departments = [];
