@@ -55,7 +55,7 @@ function employeeApp() {
                     showDepartment()
                 break;
                 case "view by manager":
-                    console.log("case 3");
+                    showmanager();
                 break;
                 case "add employee":
                     addEmployee();
@@ -152,6 +152,26 @@ function employeeApp() {
         })
     }
 
+
+//view all employees by manager
+function showmanager() {
+    inquirer.prompt([
+        {
+            name: "choosemanager",
+            type: "input",
+            message: "Which manager would you like to view?",
+        }
+    ]).then(function(answer) {
+        db.query("SELECT * FROM employees WHERE ?", { manager: answer.choosemanager}, function(err, res) {
+            if (err) throw err;
+            console.log("Name  ||  Last Name  ||  Title  ||  Department  ||  Salary  ||  Manager")
+            console.log("=======================================================================")
+            for (var i =0; res.length > i; i++) {
+                console.log(res[i].name +  "    " + res[i].lastName + "    " + res[i].title + "    " + res[i].department + "    " + res[i].salary + "    " + res[i].manager )
+            }
+        })
+    })
+}
 
 
 
