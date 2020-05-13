@@ -52,7 +52,7 @@ function employeeApp() {
                     showAll();
                 break;
                 case "view by department":
-                    console.log("case 2");
+                    showDepartment()
                 break;
                 case "view by manager":
                     console.log("case 3");
@@ -131,6 +131,55 @@ function employeeApp() {
         })
     }
 
+
+// view all employees by department
+    function showDepartment() {
+        inquirer.prompt([
+            {
+                name: "chooseDepartment",
+                type: "input",
+                message: "Which department would you like to view?",
+            }
+        ]).then(function(answer) {
+            db.query("SELECT * FROM employees WHERE ?", { department: answer.chooseDepartment}, function(err, res) {
+                if (err) throw err;
+                console.log("Name  ||  Last Name  ||  Title  ||  Department  ||  Salary  ||  Manager")
+                console.log("=======================================================================")
+                for (var i =0; res.length > i; i++) {
+                    console.log(res[i].name +  "    " + res[i].lastName + "    " + res[i].title + "    " + res[i].department + "    " + res[i].salary + "    " + res[i].manager )
+                }
+            })
+        })
+    }
+
+
+
+
+
+    //remove employee
+    // let sql = "SELECT department FROM employees";
+    // let query = db.query(sql, (err, res) => {
+    //     var departments = [];
+    //     if (err) throw err;
+    //     for(i = 0; res.length > i; i++) {
+    //         console.log(res[i].department);
+    //         departments += " " + res[i].department;
+    //         console.log("department: " + departments)
+    //     }
+    //     function askDepartments(departments) {
+    //         inquirer.prompt([
+    //             {
+    //                 name: "chooseDepartment",
+    //                 type: "list",
+    //                 message: "Select a department",
+    //                 choices: [
+                        
+    //                 ]
+    //             }
+    //         ])
+    //     }
+    //     askDepartments();
+    // })
 
 
 
