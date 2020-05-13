@@ -49,7 +49,7 @@ function employeeApp() {
         ]).then(userChoice => {
             switch(userChoice.optionSelect) {
                 case "view all employees":
-                    console.log("case 1");
+                    showAll();
                 break;
                 case "view by department":
                     console.log("case 2");
@@ -117,6 +117,21 @@ function employeeApp() {
             })
         }) 
     }
+
+// view all employees
+    function showAll() {    
+        let sql = "SELECT * FROM employees";
+        let query = db.query(sql, (err, res) => {
+            if (err) throw err;
+            console.log("Name  ||  Last Name  ||  Title  ||  Department  ||  Salary  ||  Manager")
+            console.log("=======================================================================")
+            for (var i =0; res.length > i; i++) {
+                console.log(res[i].name +  "    " + res[i].lastName + "    " + res[i].title + "    " + res[i].department + "    " + res[i].salary + "    " + res[i].manager )
+            }
+        })
+    }
+
+
 
 
     userSelect();
