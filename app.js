@@ -64,7 +64,7 @@ function employeeApp() {
                     removeEmployee();
                 break;
                 case "Update Employee role":
-                    console.log("case 6");
+                    updateRole();
                 break;
                 case "Update Employee manager":
                     console.log("case 7");
@@ -195,7 +195,28 @@ function removeEmployee() {
     }
 
 
+// Update employee role
+     function updateRole() {
+        inquirer.prompt([
+            {
+                name: "getEmpName",
+                type: "input",
+                message: "Which employee's role would you like to update?",
+            },
+            {
+                name: "getUpdRole",
+                type: "input",
+                message: "What is the updated role?",
+            }
+        ]).then(answers => {
+            //console.log(answers.getUpdRole + answers.getEmpName);
+            db.query(`UPDATE employees SET title = '${answers.getUpdRole}' WHERE name = '${answers.getEmpName}'`, (err, res) => {
+                if (err) throw err;
+                showAll();
+            })
+        })
 
+     }
 
     // let sql = "SELECT department FROM employees";
     // let query = db.query(sql, (err, res) => {
